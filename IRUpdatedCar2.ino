@@ -10,20 +10,20 @@ int bluePin = 2;
 int whitePin = 4;
 
 
-// Servo: Include libraries and set position 
+// Servo: Include libraries and set position
 long int check = 0;
 int servoTime = 500;
 int pos = 0;
 #include <Servo.h>
 Servo myservo;
 
-//Values controlling the movement
-//Forward Backwards
+// Values controlling the movement
+// Forward Backwards
 float FB = 0;
-//Left and Right
+// Left and Right
 float LR = 0;
 
-//Value for the last button pressed
+// Value for the last button pressed
 int pressed = 0x00;
 int piezoPin = 3;
 
@@ -31,7 +31,7 @@ int piezoPin = 3;
 #include <IRremote.h>
 
 
-// Declare pin of the receiver 
+// Declare pin of the receiver
 
 IRrecv irrecv(RECV_PIN);
 decode_results results;
@@ -51,8 +51,8 @@ int irCheck(boolean Send) {
   delay(100);
 }
 
-//Making an array of buttons so we can just call numbers easily when checking things.
-//To add more, just add to the initial array value and add the button hex code to the array. Make sure to add the name into the comment next to it so we can refer to it later.
+// Making an array of buttons so we can just call numbers easily when checking things.
+// To add more, just add to the initial array value and add the button hex code to the array. Make sure to add the name into the comment next to it so we can refer to it later.
 
 int IRButtons[9] = {0xFDA05F, 0xFDB04F, 0xFD10EF, 0xFD50AF, 0xFD906F, 0xFD08F7, 0xFD8877, 0xFD40BF, 0xFD40BF};
 
@@ -91,7 +91,7 @@ void loop() {
     if (pressed == IRButtons[6]) LightsOff();
     if (pressed == IRButtons[7]) beep();
     if (pressed == IRButtons[8]) wave();
-   } else if (currentVal != 0) {
+  } else if (currentVal != 0) {
     // stores the initial button press.
     pressed = currentVal;
   }
@@ -104,7 +104,7 @@ void loop() {
   LightsOnIfNotMoving();
 }
 
-// Beeps the piezo buzzer 
+// Beeps the piezo buzzer
 void beep() {
   delayMicroseconds(sin(micros()*PI / 100) * 1000);
   digitalWrite(piezoPin, HIGH);
@@ -219,6 +219,7 @@ void LightsOff() {
 }
 
 // Code to wave the arms (a bit glitchy)
+
 void wave() {
   if (millis() - check < servoTime) {
     myservo.write(map(millis() - check, 0, servoTime, 0, 60));
@@ -228,4 +229,3 @@ void wave() {
     check = millis();
   }
 }
-
